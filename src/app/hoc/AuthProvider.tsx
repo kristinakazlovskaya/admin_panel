@@ -11,7 +11,9 @@ export interface AuthProviderProps {
   children: React.ReactElement;
 }
 
-export const AuthContext = createContext<AuthContextInterface | null>(null);
+export const AuthContext = createContext(
+  null as unknown as AuthContextInterface
+);
 
 const isAuthorized = (): boolean => {
   if (localStorage.getItem("fake-token")) {
