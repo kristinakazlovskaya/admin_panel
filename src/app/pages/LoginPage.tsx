@@ -1,22 +1,22 @@
 import React from "react";
-import useAuth from "../hooks/useAuth";
+import { Container, Flex, Box, Heading } from "@chakra-ui/react";
+import LoginForm from "../components/LoginForm";
 
 const LoginPage: React.FC = () => {
-  const auth = useAuth();
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    auth.signIn();
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
-      <input id="email" name="email" />
-      <label htmlFor="username">Email</label>
-      <input id="password" name="password" type="password" />
-      <label htmlFor="password">Пароль</label>
-      <input type="submit" value="Войти" />
-    </form>
+    <Container
+      maxW="container.xxl"
+      bgGradient="linear(to-r, green.100, pink.300)"
+    >
+      <Flex h="100vh" align="center" justify="center">
+        <Box p={10} w="500px" bgColor="white" borderRadius="lg">
+          <Heading size="lg" textAlign="center">
+            Log In
+          </Heading>
+          <LoginForm />
+        </Box>
+      </Flex>
+    </Container>
   );
 };
 
