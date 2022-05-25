@@ -12,7 +12,7 @@ import * as yup from "yup";
 import useAuth from "../hooks/useAuth";
 
 const LoginForm: React.FC = () => {
-  const auth = useAuth();
+  const { signIn } = useAuth();
 
   const schema = yup
     .object({
@@ -33,7 +33,7 @@ const LoginForm: React.FC = () => {
   });
 
   const onSubmit = () => {
-    auth.signIn();
+    signIn();
   };
 
   return (
@@ -52,12 +52,12 @@ const LoginForm: React.FC = () => {
           {errors.email && errors.email.message}
         </FormErrorMessage>
       </FormControl>
-      <FormControl isInvalid={errors.password}>
+      <FormControl mt={2} isInvalid={errors.password}>
         <FormLabel htmlFor="password">Password</FormLabel>
         <Input
           type="password"
           id="password"
-          placeholder="Пароль"
+          placeholder="Password"
           {...register("password")}
         />
         <FormErrorMessage>
