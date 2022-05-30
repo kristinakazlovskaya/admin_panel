@@ -7,7 +7,7 @@ const PrivateRoute: React.FC<AuthProviderProps> = ({ children }) => {
   const auth = useAuth();
 
   if (!auth.user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/admin_panel/login" />;
   }
 
   return children;

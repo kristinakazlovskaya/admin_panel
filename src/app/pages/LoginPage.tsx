@@ -55,6 +55,7 @@ const LoginPage: React.FC = () => {
               mt="2"
               name="password"
               label="Password"
+              type="password"
               error={errors.password}
               register={register}
             />

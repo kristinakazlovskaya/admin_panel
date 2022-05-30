@@ -31,7 +31,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const signIn = () => {
     localStorage.setItem("fake-token", new Date().toString());
     setUser(true);
-    navigate("/", { replace: true });
+    navigate("/admin_panel", { replace: true });
   };
 
   const signOut = () => {

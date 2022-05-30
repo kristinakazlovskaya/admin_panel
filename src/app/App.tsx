@@ -23,7 +23,7 @@ const App: React.FC = () => {
       <AuthProvider>
         <Routes>
           <Route
-            path="/"
+            path="admin_panel"
             element={
               <PrivateRoute>
                 <MainPage />
@@ -35,7 +35,7 @@ const App: React.FC = () => {
             <Route path="albums/:id/edit" element={<EditAlbumPage />} />
             <Route path="albums/create" element={<CreateAlbumPage />} />
           </Route>
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="admin_panel/login" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AuthProvider>

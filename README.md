@@ -1,4 +1,4 @@
-[Admin-panel](https://kristinakazlovskaya.github.io/)
+[Admin-panel](https://kristinakazlovskaya.github.io/admin_panel)
 
 # Getting Started with Create React App
 
