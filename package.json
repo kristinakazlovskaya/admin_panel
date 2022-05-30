@@ -2,7 +2,7 @@
   "name": "aristek-template-v1",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://kristinakazlovskaya.github.io/",
+  "homepage": "https://kristinakazlovskaya.github.io/admin_panel/",
   "scripts": {
     "start": "run-p gql:start app:start",
     "build": "run-s gql:setup app:build",
