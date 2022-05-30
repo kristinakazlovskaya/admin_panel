@@ -2,6 +2,7 @@
   "name": "aristek-template-v1",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://kristinakazlovskaya.github.io/",
   "scripts": {
     "start": "run-p gql:start app:start",
     "build": "run-s gql:setup app:build",
@@ -18,7 +19,9 @@
     "gql:start": "nodemon --watch \"src/**/*\" -e gql --exec \"yarn gql:typings\"",
     "gql:schema": "get-graphql-schema https://graphqlzero.almansi.me/api > schema.gql",
     "gql:typings": "graphql-codegen",
-    "gql:cleanup": "rimraf \"src/**/*.generated.ts\""
+    "gql:cleanup": "rimraf \"src/**/*.generated.ts\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@apollo/client": "3.5.5",
@@ -67,6 +70,7 @@
     "eslint-plugin-react": "7.26.1",
     "eslint-plugin-react-hooks": "4.3.0",
     "get-graphql-schema": "2.1.2",
+    "gh-pages": "^4.0.0",
     "husky": "4.2.5",
     "lint-staged": "11.2.3",
     "nodemon": "2.0.13",
