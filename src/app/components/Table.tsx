@@ -10,48 +10,49 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
+// interface TableProps {
+//   headers: string[];
+//   rows: [{
+//     id: number;
+//     data: string[];
+//   }];
+//   footer?: string[];
+// };
+
+const headers = ["ID", "Title", "Username", "Number of photos", ""];
+const rows = [
+  { id: 1, data: ["1", "Vacation", "Kate", "33", "[actions]"] },
+  { id: 2, data: ["2", "Prom", "Max", "100", "[actions]"] },
+  { id: 3, data: ["3", "Friends", "Mary", "15", "[actions]"] },
+];
+
 const Table: React.FC = () => {
   return (
     <TableContainer>
       <ChakraTable variant="simple">
         <Thead>
           <Tr>
-            <Th>ID</Th>
-            <Th>Title</Th>
-            <Th>Username</Th>
-            <Th>Number of photos</Th>
-            <Th />
+            {headers.map((h) => (
+              <Th key={h}>{h}</Th>
+            ))}
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>1</Td>
-            <Td>Vacation</Td>
-            <Td>Kate</Td>
-            <Td>25</Td>
-            <Td>[actions]</Td>
-          </Tr>
-          <Tr>
-            <Td>2</Td>
-            <Td>University</Td>
-            <Td>Max</Td>
-            <Td>30</Td>
-            <Td>[actions]</Td>
-          </Tr>
-          <Tr>
-            <Td>3</Td>
-            <Td>With friends</Td>
-            <Td>Ethel</Td>
-            <Td>10</Td>
-            <Td>[actions]</Td>
-          </Tr>
+          {rows.map((row) => {
+            return (
+              <Tr key={row.id}>
+                {row.data.map((datum) => (
+                  <Td key={datum}>{datum}</Td>
+                ))}
+              </Tr>
+            );
+          })}
         </Tbody>
         <Tfoot>
           <Tr>
-            <Th>ID</Th>
-            <Th>Title</Th>
-            <Th>Username</Th>
-            <Th>Number of photos</Th>
+            {headers.map((h) => (
+              <Th key={h}>{h}</Th>
+            ))}
           </Tr>
         </Tfoot>
       </ChakraTable>
