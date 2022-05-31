@@ -10,38 +10,27 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-// interface TableProps {
-//   headers: string[];
-//   rows: [{
-//     id: number;
-//     data: string[];
-//   }];
-//   footer?: string[];
-// };
+interface TableProps {
+  headers: string[];
+  content: { [key: string]: any }[];
+}
 
-const headers = ["ID", "Title", "Username", "Number of photos", ""];
-const rows = [
-  { id: 1, data: ["1", "Vacation", "Kate", "33", "[actions]"] },
-  { id: 2, data: ["2", "Prom", "Max", "100", "[actions]"] },
-  { id: 3, data: ["3", "Friends", "Mary", "15", "[actions]"] },
-];
-
-const Table: React.FC = () => {
+const Table: React.FC<TableProps> = ({ headers, content }) => {
   return (
     <TableContainer>
       <ChakraTable variant="simple">
         <Thead>
           <Tr>
-            {headers.map((h) => (
+            {headers.map((h: string) => (
               <Th key={h}>{h}</Th>
             ))}
           </Tr>
         </Thead>
         <Tbody>
-          {rows.map((row) => {
+          {content.map((data: { [key: string]: any }) => {
             return (
-              <Tr key={row.id}>
-                {row.data.map((datum) => (
+              <Tr key={data.id}>
+                {Object.values(data).map((datum) => (
                   <Td key={datum}>{datum}</Td>
                 ))}
               </Tr>
@@ -50,7 +39,7 @@ const Table: React.FC = () => {
         </Tbody>
         <Tfoot>
           <Tr>
-            {headers.map((h) => (
+            {headers.map((h: string) => (
               <Th key={h}>{h}</Th>
             ))}
           </Tr>
