@@ -1,7 +1,10 @@
 /* eslint-disable */
 import * as Types from "../../../../schema.generated";
 
-export type GetAlbumsQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type GetAlbumsQueryVariables = Types.Exact<{
+  page?: Types.Maybe<Types.Scalars["Int"]>;
+  limit?: Types.Maybe<Types.Scalars["Int"]>;
+}>;
 
 export type GetAlbumsQuery = {
   albums?: Types.Maybe<{
@@ -17,5 +20,6 @@ export type GetAlbumsQuery = {
         >
       >
     >;
+    meta?: Types.Maybe<Pick<Types.PageMetadata, "totalCount">>;
   }>;
 };

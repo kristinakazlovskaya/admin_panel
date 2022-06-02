@@ -1,7 +1,7 @@
 import React from "react";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Routes, Route } from "react-router-dom";
-import AlbumTable from "./components/albumTable";
+import Pagination from "./components/pagination";
 import AuthProvider from "./hoc/AuthProvider";
 import PrivateRoute from "./hoc/PrivateRoute";
 import AlbumPage from "./pages/AlbumPage";
@@ -30,7 +30,7 @@ const App: React.FC = () => {
               </PrivateRoute>
             }
           >
-            <Route path="albums" element={<AlbumTable />} />
+            <Route path="albums" element={<Pagination />} />
             <Route path="albums/:id" element={<AlbumPage />} />
             <Route path="albums/:id/edit" element={<EditAlbumPage />} />
             <Route path="albums/create" element={<CreateAlbumPage />} />
