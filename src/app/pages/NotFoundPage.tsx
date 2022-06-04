@@ -5,7 +5,7 @@ const NotFoundPage: React.FC = () => {
   return (
     <>
       <div>
-        This page does not exist. Go <Link to="/admin_panel">home</Link>
+        This page does not exist. Go <Link to="/admin_panel/albums">home</Link>
       </div>
     </>
   );

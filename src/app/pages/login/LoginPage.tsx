@@ -1,11 +1,10 @@
 import React from "react";
-import { Container, Flex, Box, Heading, Button } from "@chakra-ui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { Container, Flex, Box, Heading } from "@chakra-ui/react";
 import * as yup from "yup";
-import Form from "../components/form";
-import Input from "../components/input";
-import useAuth from "../hooks/useAuth";
+import Form from "../../components/form";
+import Input from "../../components/input";
+import SubmitButton from "../../components/submitButton";
+import useAuth from "../../hooks/useAuth";
 
 const schema = yup
   .object({
@@ -20,15 +19,7 @@ const schema = yup
 const LoginPage: React.FC = () => {
   const { signIn } = useAuth();
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const onSubmit = handleSubmit(() => signIn());
+  const onSubmit = () => signIn();
 
   return (
     <Container
@@ -40,34 +31,19 @@ const LoginPage: React.FC = () => {
           <Heading size="lg" textAlign="center">
             Log In
           </Heading>
-          <Form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit} validationSchema={schema}>
             <Input
               name="email"
               label="Email"
-              error={errors.email}
               rules={{
                 pattern:
                   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
               }}
-              register={register}
             />
-            <Input
-              mt="2"
-              name="password"
-              label="Password"
-              type="password"
-              error={errors.password}
-              register={register}
-            />
-            <Button
-              w="full"
-              mt={4}
-              colorScheme="teal"
-              isLoading={isSubmitting}
-              type="submit"
-            >
+            <Input name="password" label="Password" type="password" />
+            <SubmitButton w="full" mt="4" colorScheme="teal" type="submit">
               Log In
-            </Button>
+            </SubmitButton>
           </Form>
         </Box>
       </Flex>

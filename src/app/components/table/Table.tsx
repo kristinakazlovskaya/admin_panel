@@ -3,47 +3,44 @@ import {
   Table as ChakraTable,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import { get } from "lodash";
 
-interface TableProps {
-  headers: string[];
-  content: { [key: string]: any }[];
-}
-
-const Table: React.FC<TableProps> = ({ headers, content }) => {
+const Table: React.FC<{ data: any[]; children: React.ReactElement[] }> = ({
+  data,
+  children,
+}) => {
   return (
     <TableContainer>
-      <ChakraTable variant="simple">
+      <ChakraTable>
         <Thead>
           <Tr>
-            {headers.map((h: string) => (
-              <Th key={h}>{h}</Th>
+            {React.Children.map(children, (child: React.ReactElement) => (
+              <Th>{child.props.label}</Th>
             ))}
           </Tr>
         </Thead>
         <Tbody>
-          {content.map((data: { [key: string]: any }) => {
-            return (
-              <Tr key={data.id}>
-                {Object.values(data).map((datum) => (
-                  <Td key={datum}>{datum}</Td>
-                ))}
-              </Tr>
-            );
-          })}
+          {data.map((record) => (
+            <Tr key={record.id}>
+              {React.Children.map(children, (child: React.ReactElement) => {
+                // if (child.props.isActions) {
+                //   return React.cloneElement(child, {
+                //     record,
+                //   });
+                // }
+
+                const value = get(record, child.props.dataKey);
+
+                return <Td>{value}</Td>;
+              })}
+            </Tr>
+          ))}
         </Tbody>
-        <Tfoot>
-          <Tr>
-            {headers.map((h: string) => (
-              <Th key={h}>{h}</Th>
-            ))}
-          </Tr>
-        </Tfoot>
       </ChakraTable>
     </TableContainer>
   );

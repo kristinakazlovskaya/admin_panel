@@ -24,7 +24,6 @@
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
-    "@ajna/pagination": "^1.4.17",
     "@apollo/client": "3.5.5",
     "@chakra-ui/react": "^1.7.4",
     "@emotion/react": "11",

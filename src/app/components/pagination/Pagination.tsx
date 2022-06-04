@@ -1,61 +1,36 @@
 import React, { useState, useEffect } from "react";
-import {
-  Pagination as ChakraPagination,
-  usePagination,
-  PaginationNext,
-  PaginationPage,
-  PaginationPrevious,
-  PaginationContainer,
-  PaginationPageGroup,
-  PaginationSeparator,
-} from "@ajna/pagination";
-import { useQuery } from "@apollo/client";
-import { Icon, Select, Spinner } from "@chakra-ui/react";
+import { Button, IconButton, Select, Flex } from "@chakra-ui/react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { useSearchParams } from "react-router-dom";
-import Table from "../table";
-import { operations, Types } from "./duck";
 
-const Pagination: React.FC = () => {
-  const [params, setParams] = useSearchParams();
+interface PaginationProps {
+  albumsCount: number;
+  setParams: (args: any) => void;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  pageSize: number;
+  setPageSize: React.Dispatch<React.SetStateAction<number>>;
+}
 
-  const [albumsCount, setAlbumsCount] = useState<number>(0);
-
-  const {
-    currentPage,
-    setCurrentPage,
-    pagesCount,
-    pages,
-    pageSize,
-    setPageSize,
-  } = usePagination({
-    total: albumsCount,
-    initialState: {
-      currentPage: Number(params.get("page")) || 1,
-      pageSize: Number(params.get("size")) || 10,
-    },
-    limits: {
-      outer: 1,
-      inner: 1,
-    },
-  });
-
-  const { loading, data } = useQuery<
-    Types.GetAlbumsQuery,
-    Types.GetAlbumsQueryVariables
-  >(operations.getAlbums, {
-    variables: { page: currentPage, limit: pageSize },
-  });
+const Pagination: React.FC<PaginationProps> = ({
+  albumsCount,
+  setParams,
+  currentPage,
+  setCurrentPage,
+  pageSize,
+  setPageSize,
+}) => {
+  const [pages, setPages] = useState<number[]>([]);
 
   useEffect(() => {
-    if (data?.albums?.meta) {
-      setAlbumsCount(Number(data.albums.meta.totalCount));
-    }
-  }, [data?.albums?.meta]);
+    setPages(
+      Array(albumsCount / pageSize)
+        .fill("")
+        .map((_, i) => 1 + i)
+    );
+  }, [albumsCount, pageSize]);
 
-  const handlePageChange = (nextPage: number): void => {
+  const handlePageChange = (nextPage: number) => {
     setCurrentPage(nextPage);
-
     setParams({ page: String(nextPage), limit: String(pageSize) });
   };
 
@@ -63,80 +38,70 @@ const Pagination: React.FC = () => {
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const newPageSize = Number(event.target.value);
-
     setPageSize(newPageSize);
-
     setCurrentPage(1);
-
     setParams({ page: "1", limit: String(newPageSize) });
   };
 
-  const renderData = () => {
-    if (!data || loading) return <Spinner color="teal.500" />;
+  const handlePrevButtonClick = () => {
+    setCurrentPage(currentPage - 1);
+    setParams({ page: currentPage - 1, limit: String(pageSize) });
+  };
 
-    if (data?.albums?.data) {
-      const content = data.albums.data.map((album) => ({
-        id: album?.id,
-        title: album?.title,
-        username: album?.user?.username,
-        pagesCount: album?.photos?.data?.length,
-        actions: "[actions]",
-      }));
-
-      const headers = ["ID", "Title", "Username", "Number of photos", ""];
-
-      return <Table headers={headers} content={content} />;
-    }
+  const handleNextButtonClick = () => {
+    setCurrentPage(currentPage + 1);
+    setParams({ page: currentPage + 1, limit: String(pageSize) });
   };
 
   return (
-    <>
+    <Flex gap="1" justifyContent="center" wrap="wrap">
       <Select
+        size="sm"
         fontWeight="semibold"
-        ml="auto"
         bg="white"
+        borderRadius="md"
+        w="15"
+        value={pageSize}
         onChange={handlePageSizeChange}
-        w={20}
       >
         <option value="10">10</option>
         <option value="20">20</option>
         <option value="50">50</option>
       </Select>
-      {renderData()}
-      <ChakraPagination
-        pagesCount={pagesCount}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      >
-        <PaginationContainer justify="center">
-          <PaginationPrevious bg="none" _hover={{ bg: "none" }}>
-            <Icon as={BsChevronLeft} />
-          </PaginationPrevious>
-          <PaginationPageGroup
-            separator={<PaginationSeparator w={7} bg="gray.100" />}
-          >
-            {pages.map((p: number) => (
-              <PaginationPage
-                key={`pagination_page_${p}`}
-                w={7}
-                page={p}
-                _hover={{
-                  bg: "teal.600",
-                  color: "white",
-                }}
-                _current={{
-                  bg: "teal.500",
-                  color: "white",
-                }}
-              />
-            ))}
-          </PaginationPageGroup>
-          <PaginationNext bg="none" _hover={{ bg: "none" }}>
-            <Icon as={BsChevronRight} />
-          </PaginationNext>
-        </PaginationContainer>
-      </ChakraPagination>
-    </>
+      <IconButton
+        bg="none"
+        size="sm"
+        borderRadius="50%"
+        aria-label="Previous page"
+        icon={<BsChevronLeft />}
+        _hover={{ bg: "teal.600", color: "white" }}
+        disabled={currentPage === 1}
+        onClick={() => handlePrevButtonClick()}
+      />
+      {pages.map((p: number) => (
+        <Button
+          key={p}
+          size="sm"
+          borderRadius="full"
+          bg={p === currentPage ? undefined : "none"}
+          colorScheme={p === currentPage ? "teal" : undefined}
+          _hover={{ bg: "teal.600", color: "white" }}
+          onClick={() => handlePageChange(p)}
+        >
+          {p}
+        </Button>
+      ))}
+      <IconButton
+        bg="none"
+        size="sm"
+        borderRadius="50%"
+        aria-label="Next page"
+        icon={<BsChevronRight />}
+        _hover={{ bg: "teal.600", color: "white" }}
+        disabled={currentPage === pages.length}
+        onClick={() => handleNextButtonClick()}
+      />
+    </Flex>
   );
 };
 

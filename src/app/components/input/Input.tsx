@@ -1,52 +1,46 @@
 import React from "react";
+import { Input, InputProps } from "@chakra-ui/react";
 import {
-  FormErrorMessage,
-  FormLabel,
-  FormControl,
-  Input as ChakraInput,
-  Box,
-  BoxProps,
-} from "@chakra-ui/react";
-import {
-  UseFormRegister,
-  FieldValues,
+  useFormContext,
+  useController,
   RegisterOptions,
-  FieldError,
 } from "react-hook-form";
+import InputLayout from "../inputLayout";
 
-interface InputProps extends BoxProps {
+interface TextInputProps extends InputProps {
   name: string;
   label: string;
-  type?: string;
-  error: FieldError;
   rules?: RegisterOptions;
-  register: UseFormRegister<FieldValues>;
-  rest?: string[];
 }
 
-const Input: React.FC<InputProps> = ({
+const TextInput: React.FC<TextInputProps> = ({
   name,
   label,
-  type = "text",
-  error,
   rules,
-  register,
   ...rest
 }) => {
+  const { control } = useFormContext();
+
+  const {
+    field: { onChange, onBlur, value, ref },
+  } = useController({
+    control,
+    name,
+    rules,
+  });
+
   return (
-    <Box {...rest}>
-      <FormControl isInvalid={!!error}>
-        <FormLabel htmlFor={name}>{label}</FormLabel>
-        <ChakraInput
-          id={name}
-          type={type}
-          placeholder={label}
-          {...register(name, rules)}
-        />
-        <FormErrorMessage>{error && error.message}</FormErrorMessage>
-      </FormControl>
-    </Box>
+    <InputLayout name={name} label={label}>
+      <Input
+        ref={ref}
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        {...rest}
+      />
+    </InputLayout>
   );
 };
 
-export default Input;
+export default TextInput;
