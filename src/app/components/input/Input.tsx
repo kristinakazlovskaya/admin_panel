@@ -22,7 +22,7 @@ const TextInput: React.FC<TextInputProps> = ({
   const { control } = useFormContext();
 
   const {
-    field: { onChange, onBlur, value, ref },
+    field: { onChange, onBlur, ref },
   } = useController({
     control,
     name,
@@ -34,7 +34,6 @@ const TextInput: React.FC<TextInputProps> = ({
       <Input
         ref={ref}
         name={name}
-        value={value}
         onChange={onChange}
         onBlur={onBlur}
         {...rest}

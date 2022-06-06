@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { Box, Button, Spinner } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { useSearchParams, Link } from "react-router-dom";
-import Pagination from "app/components/pagination";
-import Column from "../../components/column";
-import Table from "../../components/table";
+import { Spinner, Pagination, Column, Table } from "app/components";
 import { operations, Types } from "./duck";
 
 const AlbumsList: React.FC = () => {
@@ -24,12 +22,7 @@ const AlbumsList: React.FC = () => {
     variables: { page: currentPage, limit: pageSize },
   });
 
-  if (!data || loading)
-    return (
-      <Box display="flex" alignItems="center" justifyContent="center">
-        <Spinner color="teal.500" />
-      </Box>
-    );
+  if (!data || loading) return <Spinner />;
 
   if (data?.albums?.data) {
     const content = data.albums.data.map((album) => ({
@@ -40,7 +33,7 @@ const AlbumsList: React.FC = () => {
     }));
 
     return (
-      <>
+      <Box py="4">
         <Table data={content}>
           <Column label="ID" dataKey="id" />
           <Column label="Title" dataKey="title" />
@@ -60,7 +53,7 @@ const AlbumsList: React.FC = () => {
           pageSize={pageSize}
           setPageSize={setPageSize}
         />
-      </>
+      </Box>
     );
   }
 

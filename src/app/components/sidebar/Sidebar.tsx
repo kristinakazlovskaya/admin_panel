@@ -19,9 +19,9 @@ const Sidebar: React.FC = () => {
       bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w="60"
+      w={{ base: 40, md: 60 }}
       pos="fixed"
-      px={4}
+      px="4"
     >
       <Flex direction="column" justifyContent="space-between" h="100vh">
         <Box mt="4">

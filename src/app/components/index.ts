@@ -6,3 +6,5 @@ export { default as Column } from "./column";
 export { default as SubmitButton } from "./submitButton";
 export { default as Sidebar } from "./sidebar";
 export { default as Pagination } from "./pagination";
+export { default as Select } from "./select";
+export { default as Spinner } from "./spinner";
