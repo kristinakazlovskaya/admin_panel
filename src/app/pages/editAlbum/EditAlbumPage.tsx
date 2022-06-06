@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { Button, Heading, Box, Flex } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Flex, Box, Heading, Button } from "@chakra-ui/react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { SubmitButton, Select, Input, Form, Spinner } from "app/components";
+import { Form, Input, Select, SubmitButton, Spinner } from "app/components";
 import {
   operations as getUsersOperation,
   Types as getUsersTypes,
@@ -17,45 +17,62 @@ const schema = yup
   })
   .required();
 
-const CreateAlbumPage: React.FC = () => {
+const EditAlbumPage: React.FC = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const { loading, data } = useQuery<
+  const { loading: usersLoading, data: usersData } = useQuery<
     getUsersTypes.GetUsersQuery,
     getUsersTypes.GetUsersQueryVariables
   >(getUsersOperation.getUsers);
 
-  const [createAlbum, { data: mutationData, loading: mutationLoading }] =
-    useMutation<Types.CreateAlbumMutation, Types.CreateAlbumMutationVariables>(
-      operations.createAlbum
+  const { loading: albumLoading, data: albumData } = useQuery<
+    Types.GetAlbumQuery,
+    Types.GetAlbumQueryVariables
+  >(operations.getAlbum, {
+    variables: { id: id ?? "" },
+  });
+
+  const [updateAlbum, { data: mutationData, loading: mutationLoading }] =
+    useMutation<Types.UpdateAlbumMutation, Types.UpdateAlbumMutationVariables>(
+      operations.updateAlbum
     );
 
   useEffect(() => {
-    if (mutationData?.createAlbum) navigate("/admin_panel/albums");
-  }, [mutationData?.createAlbum, navigate]);
+    if (mutationData?.updateAlbum) navigate("/admin_panel/albums");
+  }, [mutationData?.updateAlbum, navigate]);
 
-  if (!data || loading) return <Spinner />;
+  if (!usersData || usersLoading || !albumData || albumLoading)
+    return <Spinner />;
 
-  if (data.users?.data) {
+  if (usersData?.users?.data && albumData?.album) {
     return (
       <Flex h="100vh" align="center" justify="center">
         <Box p="10" w="500px" bgColor="white" borderRadius="lg">
           <Heading mb="4" size="sm" textAlign="center">
-            Create album
+            Edit album
           </Heading>
           <Form
             onSubmit={(values) => {
-              createAlbum({
-                variables: { title: values.title, userId: values.user },
+              updateAlbum({
+                variables: {
+                  title: values.title,
+                  userId: values.user,
+                  id: id ?? "",
+                },
               });
             }}
             validationSchema={schema}
+            defaultValues={{
+              title: albumData.album.title,
+              user: albumData.album.user?.id,
+            }}
           >
             <Input name="title" label="Title" />
             <Select
               name="user"
               label="User"
-              data={data.users.data}
+              data={usersData.users.data}
               dataValueKey="id"
               dataLabelKey="username"
             />
@@ -67,7 +84,7 @@ const CreateAlbumPage: React.FC = () => {
                 colorScheme="teal"
                 type="submit"
               >
-                Submit
+                Edit
               </SubmitButton>
               <Link to="/admin_panel/albums">
                 <Button mt="4">Cancel</Button>
@@ -82,4 +99,4 @@ const CreateAlbumPage: React.FC = () => {
   return <p>Error</p>;
 };
 
-export default CreateAlbumPage;
+export default EditAlbumPage;

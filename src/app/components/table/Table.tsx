@@ -28,11 +28,11 @@ const Table: React.FC<{ data: any[]; children: React.ReactElement[] }> = ({
           {data.map((record) => (
             <Tr key={record.id}>
               {React.Children.map(children, (child: React.ReactElement) => {
-                // if (child.props.isActions) {
-                //   return React.cloneElement(child, {
-                //     record,
-                //   });
-                // }
+                if (child.props.isActions) {
+                  return React.cloneElement(child, {
+                    record,
+                  });
+                }
 
                 const value = get(record, child.props.dataKey);
 

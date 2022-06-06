@@ -6,7 +6,7 @@ import PrivateRoute from "./hoc/PrivateRoute";
 import AlbumPage from "./pages/AlbumPage";
 import AlbumsList from "./pages/albumsList";
 import CreateAlbumPage from "./pages/createAlbum/CreateAlbumPage";
-import EditAlbumPage from "./pages/EditAlbumPage";
+import EditAlbumPage from "./pages/editAlbum/EditAlbumPage";
 import LoginPage from "./pages/login/LoginPage";
 import MainPage from "./pages/main/MainPage";
 import NotFoundPage from "./pages/NotFoundPage";

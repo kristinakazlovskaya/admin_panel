@@ -4,8 +4,10 @@ declare module "*/operations.gql" {
   import { DocumentNode } from "graphql";
   const defaultDocument: DocumentNode;
   export const getAlbums: DocumentNode;
-  export const getUsers: DocumentNode;
   export const createAlbum: DocumentNode;
+  export const getUsers: DocumentNode;
+  export const updateAlbum: DocumentNode;
+  export const getAlbum: DocumentNode;
 
   export default defaultDocument;
 }

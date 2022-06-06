@@ -11,15 +11,18 @@ import { AnyObjectSchema } from "yup";
 interface FormProps {
   onSubmit: SubmitHandler<FieldValues>;
   validationSchema: AnyObjectSchema;
+  defaultValues?: Record<string, any>;
 }
 
 const Form: React.FC<FormProps> = ({
   onSubmit,
   validationSchema,
+  defaultValues,
   children,
 }) => {
   const methods = useForm({
     resolver: yupResolver(validationSchema),
+    defaultValues,
   });
 
   return (

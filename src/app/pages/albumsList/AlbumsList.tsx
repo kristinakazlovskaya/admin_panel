@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Box, Button } from "@chakra-ui/react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Spinner, Pagination, Column, Table } from "app/components";
+import {
+  Spinner,
+  Pagination,
+  Column,
+  Table,
+  Actions,
+  EditAction,
+} from "app/components";
 import { operations, Types } from "./duck";
 
 const AlbumsList: React.FC = () => {
@@ -39,6 +46,9 @@ const AlbumsList: React.FC = () => {
           <Column label="Title" dataKey="title" />
           <Column label="Username" dataKey="username" />
           <Column label="Number of photos" dataKey="pagesCount" />
+          <Actions>
+            <EditAction />
+          </Actions>
         </Table>
         <Link to="../albums/create">
           <Button colorScheme="teal" my="2">
@@ -57,7 +67,7 @@ const AlbumsList: React.FC = () => {
     );
   }
 
-  return <code>data.albums = null</code>;
+  return <p>Error</p>;
 };
 
 export default AlbumsList;

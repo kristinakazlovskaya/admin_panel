@@ -1,0 +1,8 @@
+query getUsers {
+  users {
+    data {
+      id
+      username
+    }
+  }
+}
