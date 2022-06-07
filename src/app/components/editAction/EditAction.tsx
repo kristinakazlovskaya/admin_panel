@@ -8,7 +8,7 @@ const EditAction: React.FC<{ record?: Record<string, unknown> }> = ({
 }) => {
   return (
     <Link to={`../albums/${record?.id}/edit`}>
-      <Icon as={AiFillEdit} title="Edit album" />
+      <Icon as={AiFillEdit} title="Edit album" mx="1" />
     </Link>
   );
 };

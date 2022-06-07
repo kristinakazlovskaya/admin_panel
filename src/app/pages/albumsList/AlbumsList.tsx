@@ -9,6 +9,7 @@ import {
   Table,
   Actions,
   EditAction,
+  DeleteAction,
 } from "app/components";
 import { operations, Types } from "./duck";
 
@@ -48,6 +49,7 @@ const AlbumsList: React.FC = () => {
           <Column label="Number of photos" dataKey="pagesCount" />
           <Actions>
             <EditAction />
+            <DeleteAction />
           </Actions>
         </Table>
         <Link to="../albums/create">

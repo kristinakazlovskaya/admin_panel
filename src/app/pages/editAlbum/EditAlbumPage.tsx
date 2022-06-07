@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { Flex, Box, Heading, Button } from "@chakra-ui/react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { Form, Input, Select, SubmitButton, Spinner } from "app/components";
+import { Form, Input, Select, Spinner } from "app/components";
 import {
   operations as getUsersOperation,
   Types as getUsersTypes,
@@ -49,7 +49,7 @@ const EditAlbumPage: React.FC = () => {
     return (
       <Flex h="100vh" align="center" justify="center">
         <Box p="10" w="500px" bgColor="white" borderRadius="lg">
-          <Heading mb="4" size="sm" textAlign="center">
+          <Heading mb="6" size="md">
             Edit album
           </Heading>
           <Form
@@ -76,19 +76,18 @@ const EditAlbumPage: React.FC = () => {
               dataValueKey="id"
               dataLabelKey="username"
             />
-            <Flex justify="end">
-              <SubmitButton
+            <Flex justify="end" mt="6">
+              <Link to="/admin_panel/albums">
+                <Button>Cancel</Button>
+              </Link>
+              <Button
                 isLoading={mutationLoading}
-                mt="4"
-                mr="2"
+                ml="3"
                 colorScheme="teal"
                 type="submit"
               >
                 Edit
-              </SubmitButton>
-              <Link to="/admin_panel/albums">
-                <Button mt="4">Cancel</Button>
-              </Link>
+              </Button>
             </Flex>
           </Form>
         </Box>
