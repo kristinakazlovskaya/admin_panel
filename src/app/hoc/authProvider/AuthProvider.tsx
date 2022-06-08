@@ -7,15 +7,11 @@ interface AuthContextInterface {
   signOut: () => void;
 }
 
-export interface AuthProviderProps {
-  children: React.ReactElement;
-}
-
 export const AuthContext = createContext(
   null as unknown as AuthContextInterface
 );
 
-const isAuthorized = (): boolean => {
+const isAuthorized = () => {
   if (localStorage.getItem("fake-token")) {
     return true;
   }
@@ -23,7 +19,7 @@ const isAuthorized = (): boolean => {
   return false;
 };
 
-const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<boolean>(isAuthorized);
 
   const navigate = useNavigate();
@@ -39,7 +35,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(false);
   };
 
-  const value: AuthContextInterface = { user, signIn, signOut };
+  const value = { user, signIn, signOut };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

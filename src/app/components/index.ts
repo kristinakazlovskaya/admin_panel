@@ -10,3 +10,6 @@ export { default as Spinner } from "./spinner";
 export { default as Actions } from "./actions";
 export { default as EditAction } from "./editAction";
 export { default as DeleteAction } from "./deleteAction";
+export { default as ShowAction } from "./showAction";
+export { default as BackButton } from "./backButton";
+export { default as ShowPhotoAction } from "./showPhotoAction";

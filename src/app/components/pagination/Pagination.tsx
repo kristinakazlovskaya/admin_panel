@@ -23,7 +23,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
   useEffect(() => {
     setPages(
-      Array(albumsCount / pageSize)
+      Array(Math.ceil(albumsCount / pageSize))
         .fill("")
         .map((_, i) => 1 + i)
     );

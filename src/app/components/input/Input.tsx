@@ -11,12 +11,14 @@ interface TextInputProps extends InputProps {
   name: string;
   label: string;
   rules?: RegisterOptions;
+  defaultValue?: string;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
   name,
   label,
   rules,
+  defaultValue,
   ...rest
 }) => {
   const { control } = useFormContext();
@@ -27,6 +29,7 @@ const TextInput: React.FC<TextInputProps> = ({
     control,
     name,
     rules,
+    defaultValue: defaultValue || "",
   });
 
   return (

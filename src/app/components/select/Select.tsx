@@ -9,6 +9,7 @@ interface CustomSelectProps extends SelectProps {
   data: any[];
   dataValueKey: string;
   dataLabelKey: string;
+  defaultValue?: string;
 }
 
 const Select: React.FC<CustomSelectProps> = ({
@@ -17,6 +18,7 @@ const Select: React.FC<CustomSelectProps> = ({
   dataValueKey,
   dataLabelKey,
   data,
+  defaultValue,
 }) => {
   const { control } = useFormContext();
 
@@ -25,6 +27,7 @@ const Select: React.FC<CustomSelectProps> = ({
   } = useController({
     control,
     name,
+    defaultValue: defaultValue || "",
   });
 
   return (

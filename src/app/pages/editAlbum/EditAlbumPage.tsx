@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { Flex, Box, Heading, Button } from "@chakra-ui/react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { Form, Input, Select, Spinner } from "app/components";
+import { BackButton, Form, Input, Select, Spinner } from "app/components";
 import {
   operations as getUsersOperation,
   Types as getUsersTypes,
@@ -47,11 +47,13 @@ const EditAlbumPage: React.FC = () => {
 
   if (usersData?.users?.data && albumData?.album) {
     return (
-      <Flex h="100vh" align="center" justify="center">
-        <Box p="10" w="500px" bgColor="white" borderRadius="lg">
-          <Heading mb="6" size="md">
-            Edit album
-          </Heading>
+      <Box py="4">
+        <Flex justify="space-between">
+          <Heading mb="4">Edit album</Heading>
+          <BackButton />
+        </Flex>
+
+        <Box w="500px">
           <Form
             onSubmit={(values) => {
               updateAlbum({
@@ -63,35 +65,37 @@ const EditAlbumPage: React.FC = () => {
               });
             }}
             validationSchema={schema}
-            defaultValues={{
-              title: albumData.album.title,
-              user: albumData.album.user?.id,
-            }}
           >
-            <Input name="title" label="Title" />
+            <Input
+              name="title"
+              label="Title"
+              defaultValue={albumData.album.title || ""}
+            />
             <Select
               name="user"
               label="User"
               data={usersData.users.data}
               dataValueKey="id"
               dataLabelKey="username"
+              defaultValue={albumData.album.user?.id || ""}
             />
-            <Flex justify="end" mt="6">
-              <Link to="/admin_panel/albums">
-                <Button>Cancel</Button>
-              </Link>
+
+            <Box mt="4">
               <Button
                 isLoading={mutationLoading}
-                ml="3"
                 colorScheme="teal"
                 type="submit"
+                mr="2"
               >
                 Edit
               </Button>
-            </Flex>
+              <Link to="/admin_panel/albums">
+                <Button>Cancel</Button>
+              </Link>
+            </Box>
           </Form>
         </Box>
-      </Flex>
+      </Box>
     );
   }
 

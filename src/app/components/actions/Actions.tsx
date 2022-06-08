@@ -5,10 +5,10 @@ const Actions: React.FC<{
   record?: Record<string, unknown>;
   // eslint-disable-next-line
   isActions?: boolean;
-  children: React.ReactElement[];
+  children: React.ReactElement[] | React.ReactElement;
 }> = ({ record, children }) => {
   return (
-    <Td>
+    <Td textAlign="end">
       {React.Children.map(children, (child: React.ReactElement) =>
         React.cloneElement(child, {
           record,

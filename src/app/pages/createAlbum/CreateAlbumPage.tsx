@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { Button, Heading, Box, Flex } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { Select, Input, Form, Spinner } from "app/components";
+import { Select, Input, Form, Spinner, BackButton } from "app/components";
 import {
   operations as getUsersOperation,
   Types as getUsersTypes,
@@ -12,7 +12,11 @@ import { operations, Types } from "./duck";
 
 const schema = yup
   .object({
-    title: yup.string().required("This is required").min(3).max(64),
+    title: yup
+      .string()
+      .required("This is required")
+      .min(3, "Must be at least 3 characters")
+      .max(64, "Must be less than 64 characters"),
     user: yup.string().required("This is required"),
   })
   .required();
@@ -38,11 +42,13 @@ const CreateAlbumPage: React.FC = () => {
 
   if (data.users?.data) {
     return (
-      <Flex h="100vh" align="center" justify="center">
-        <Box p="10" w="500px" bgColor="white" borderRadius="lg">
-          <Heading mb="6" size="md">
-            Create album
-          </Heading>
+      <Box py="4">
+        <Flex justify="space-between">
+          <Heading mb="4">Create album</Heading>
+          <BackButton />
+        </Flex>
+
+        <Box w="500px">
           <Form
             onSubmit={(values) => {
               createAlbum({
@@ -59,22 +65,22 @@ const CreateAlbumPage: React.FC = () => {
               dataValueKey="id"
               dataLabelKey="username"
             />
-            <Flex mt="6" justify="end">
-              <Link to="/admin_panel/albums">
-                <Button>Cancel</Button>
-              </Link>
+            <Box mt="4">
               <Button
                 isLoading={mutationLoading}
-                ml="3"
+                mr="2"
                 colorScheme="teal"
                 type="submit"
               >
                 Submit
               </Button>
-            </Flex>
+              <Link to="/admin_panel/albums">
+                <Button>Cancel</Button>
+              </Link>
+            </Box>
           </Form>
         </Box>
-      </Flex>
+      </Box>
     );
   }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Heading, Flex } from "@chakra-ui/react";
 import { useSearchParams, Link } from "react-router-dom";
 import {
   Spinner,
@@ -10,6 +10,7 @@ import {
   Actions,
   EditAction,
   DeleteAction,
+  ShowAction,
 } from "app/components";
 import { operations, Types } from "./duck";
 
@@ -33,38 +34,37 @@ const AlbumsList: React.FC = () => {
   if (!data || loading) return <Spinner />;
 
   if (data?.albums?.data) {
-    const content = data.albums.data.map((album) => ({
-      id: album?.id,
-      title: album?.title,
-      username: album?.user?.username,
-      pagesCount: album?.photos?.data?.length,
-    }));
-
     return (
       <Box py="4">
-        <Table data={content}>
+        <Flex mb="4" justify="space-between">
+          <Heading>Albums</Heading>
+          <Link to="../albums/create">
+            <Button colorScheme="teal" my="2">
+              Create album
+            </Button>
+          </Link>
+        </Flex>
+        <Table data={data.albums.data}>
           <Column label="ID" dataKey="id" />
           <Column label="Title" dataKey="title" />
-          <Column label="Username" dataKey="username" />
-          <Column label="Number of photos" dataKey="pagesCount" />
+          <Column label="Username" dataKey="user.username" />
+          <Column label="Number of photos" dataKey="photos.data.length" />
           <Actions>
             <EditAction />
             <DeleteAction />
+            <ShowAction />
           </Actions>
         </Table>
-        <Link to="../albums/create">
-          <Button colorScheme="teal" my="2">
-            Create album
-          </Button>
-        </Link>
-        <Pagination
-          albumsCount={data.albums.meta?.totalCount || 0}
-          setParams={setParams}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-        />
+        <Box mt="2">
+          <Pagination
+            albumsCount={data.albums.meta?.totalCount || 0}
+            setParams={setParams}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+          />
+        </Box>
       </Box>
     );
   }

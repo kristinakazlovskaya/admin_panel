@@ -7,6 +7,7 @@ import {
   Th,
   Td,
   TableContainer,
+  Image,
 } from "@chakra-ui/react";
 import { get } from "lodash";
 
@@ -35,6 +36,14 @@ const Table: React.FC<{ data: any[]; children: React.ReactElement[] }> = ({
                 }
 
                 const value = get(record, child.props.dataKey);
+
+                if (child.props.dataKey === "thumbnailUrl") {
+                  return (
+                    <Td>
+                      <Image boxSize="50px" src={value} alt="Photo preview" />
+                    </Td>
+                  );
+                }
 
                 return <Td>{value}</Td>;
               })}

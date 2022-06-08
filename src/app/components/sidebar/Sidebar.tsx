@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  Box,
-  Flex,
-  useColorModeValue,
-  Heading,
-  Button,
-  Icon,
-} from "@chakra-ui/react";
-import { MdOutlinePhotoAlbum } from "react-icons/md";
+import { Box, Flex, useColorModeValue, Button, Icon } from "@chakra-ui/react";
+import { BiPhotoAlbum } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import { useAuth } from "app/hooks";
 
 const Sidebar: React.FC = () => {
   const { signOut } = useAuth();
@@ -25,16 +18,13 @@ const Sidebar: React.FC = () => {
     >
       <Flex direction="column" justifyContent="space-between" h="100vh">
         <Box mt="4">
-          <Heading mb="4" size="md">
-            Admin Panel
-          </Heading>
           <Link to="/admin_panel/albums">
             <Button
               colorScheme="teal"
               variant="ghost"
               w="full"
               justifyContent="flex-start"
-              leftIcon={<Icon as={MdOutlinePhotoAlbum} />}
+              leftIcon={<Icon as={BiPhotoAlbum} />}
               role="group"
               _hover={{
                 bg: "teal",

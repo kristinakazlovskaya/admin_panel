@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Flex, Box, Heading, Button } from "@chakra-ui/react";
 import * as yup from "yup";
 import { Form, Input } from "app/components/";
-import useAuth from "app/hooks/useAuth";
+import { useAuth } from "app/hooks";
 
 const schema = yup
   .object({
@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
     >
       <Flex h="100vh" align="center" justify="center">
         <Box p={10} w="500px" bgColor="white" borderRadius="lg">
-          <Heading mb="6" size="md" textAlign="center">
+          <Heading mb="4" textAlign="center">
             Log In
           </Heading>
           <Form onSubmit={onSubmit} validationSchema={schema}>
@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
               }}
             />
             <Input name="password" label="Password" type="password" />
-            <Button w="full" mt="6" colorScheme="teal" type="submit">
+            <Button w="full" mt="4" colorScheme="teal" type="submit">
               Log In
             </Button>
           </Form>

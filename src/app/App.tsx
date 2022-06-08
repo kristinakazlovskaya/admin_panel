@@ -1,19 +1,19 @@
 import React from "react";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Routes, Route } from "react-router-dom";
-import AuthProvider from "./hoc/AuthProvider";
-import PrivateRoute from "./hoc/PrivateRoute";
-import AlbumPage from "./pages/AlbumPage";
-import AlbumsList from "./pages/albumsList";
-import CreateAlbumPage from "./pages/createAlbum/CreateAlbumPage";
-import EditAlbumPage from "./pages/editAlbum/EditAlbumPage";
-import LoginPage from "./pages/login/LoginPage";
-import MainPage from "./pages/main/MainPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import { AuthProvider, PrivateRoute } from "app/hoc";
+import {
+  AlbumPage,
+  AlbumsListPage,
+  CreateAlbumPage,
+  EditAlbumPage,
+  LoginPage,
+  MainPage,
+  NotFoundPage,
+} from "app/pages";
 
-// uri: process.env.REACT_APP_API_URL
 const client = new ApolloClient({
-  uri: "https://graphqlzero.almansi.me/api",
+  uri: process.env.REACT_APP_API_URL,
   cache: new InMemoryCache(),
 });
 
@@ -30,7 +30,7 @@ const App: React.FC = () => {
               </PrivateRoute>
             }
           >
-            <Route path="albums" element={<AlbumsList />} />
+            <Route path="albums" element={<AlbumsListPage />} />
             <Route path="albums/:id" element={<AlbumPage />} />
             <Route path="albums/:id/edit" element={<EditAlbumPage />} />
             <Route path="albums/create" element={<CreateAlbumPage />} />
