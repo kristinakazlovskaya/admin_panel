@@ -34,6 +34,7 @@ const Select: React.FC<CustomSelectProps> = ({
     <InputLayout name={name} label={label}>
       <ChakraSelect
         name={name}
+        id={name}
         value={value}
         ref={ref}
         onChange={onChange}

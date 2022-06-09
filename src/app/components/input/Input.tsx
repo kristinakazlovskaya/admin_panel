@@ -38,6 +38,7 @@ const TextInput: React.FC<TextInputProps> = ({
         ref={ref}
         value={value}
         name={name}
+        id={name}
         onChange={onChange}
         onBlur={onBlur}
         {...rest}
