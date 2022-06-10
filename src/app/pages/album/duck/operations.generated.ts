@@ -1,26 +1,14 @@
 /* eslint-disable */
 import * as Types from "../../../../schema.generated";
 
-export type GetPhotosQueryVariables = Types.Exact<{
+export type GetAlbumDataQueryVariables = Types.Exact<{
   id: Types.Scalars["ID"];
-  page?: Types.Maybe<Types.Scalars["Int"]>;
-  limit?: Types.Maybe<Types.Scalars["Int"]>;
 }>;
 
-export type GetPhotosQuery = {
+export type GetAlbumDataQuery = {
   album?: Types.Maybe<
     Pick<Types.Album, "title" | "id"> & {
       user?: Types.Maybe<Pick<Types.User, "id" | "username" | "name">>;
-      photos?: Types.Maybe<{
-        data?: Types.Maybe<
-          Array<
-            Types.Maybe<
-              Pick<Types.Photo, "id" | "title" | "url" | "thumbnailUrl">
-            >
-          >
-        >;
-        meta?: Types.Maybe<Pick<Types.PageMetadata, "totalCount">>;
-      }>;
     }
   >;
 };

@@ -9,7 +9,7 @@ const schema = yup
     email: yup
       .string()
       .required("This is required")
-      .email("Must be a valid email"),
+      .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g, "Must be a valid email"),
     password: yup.string().required("This is required"),
   })
   .required();
@@ -30,14 +30,7 @@ const LoginPage: React.FC = () => {
             Log In
           </Heading>
           <Form onSubmit={onSubmit} validationSchema={schema}>
-            <Input
-              name="email"
-              label="Email"
-              rules={{
-                pattern:
-                  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-              }}
-            />
+            <Input name="email" label="Email" />
             <Input name="password" label="Password" type="password" />
             <Button w="full" mt="4" colorScheme="teal" type="submit">
               Log In

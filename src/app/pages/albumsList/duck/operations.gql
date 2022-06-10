@@ -18,3 +18,7 @@ query getAlbums($page: Int, $limit: Int) {
     }
   }
 }
+
+mutation deleteAlbum($id: ID!) {
+  deleteAlbum(id: $id)
+}

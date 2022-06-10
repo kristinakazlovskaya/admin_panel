@@ -1,33 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { Button, IconButton, Select, Flex } from "@chakra-ui/react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { useSearchParams } from "react-router-dom";
 
-interface PaginationProps {
-  albumsCount: number;
-  setParams: (args: any) => void;
-  currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  pageSize: number;
-  setPageSize: React.Dispatch<React.SetStateAction<number>>;
-}
+const Pagination: React.FC<{ totalCount: number }> = ({ totalCount }) => {
+  const [params, setParams] = useSearchParams();
 
-const Pagination: React.FC<PaginationProps> = ({
-  albumsCount,
-  setParams,
-  currentPage,
-  setCurrentPage,
-  pageSize,
-  setPageSize,
-}) => {
-  const [pages, setPages] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(
+    Number(params.get("page")) || 1
+  );
+  const [pageSize, setPageSize] = useState<number>(
+    Number(params.get("limit")) || 10
+  );
 
-  useEffect(() => {
-    setPages(
-      Array(Math.ceil(albumsCount / pageSize))
+  const pages = useMemo(
+    () =>
+      Array(Math.ceil(totalCount / pageSize))
         .fill("")
-        .map((_, i) => 1 + i)
-    );
-  }, [albumsCount, pageSize]);
+        .map((_, i) => 1 + i),
+    [totalCount, pageSize]
+  );
 
   const handlePageChange = (nextPage: number) => {
     setCurrentPage(nextPage);
@@ -44,13 +36,17 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   const handlePrevButtonClick = () => {
+    if (currentPage === 1) return;
+
     setCurrentPage(currentPage - 1);
-    setParams({ page: currentPage - 1, limit: String(pageSize) });
+    setParams({ page: String(currentPage - 1), limit: String(pageSize) });
   };
 
   const handleNextButtonClick = () => {
+    if (currentPage === pages.length) return;
+
     setCurrentPage(currentPage + 1);
-    setParams({ page: currentPage + 1, limit: String(pageSize) });
+    setParams({ page: String(currentPage + 1), limit: String(pageSize) });
   };
 
   return (

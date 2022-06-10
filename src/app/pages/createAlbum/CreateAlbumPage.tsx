@@ -42,7 +42,7 @@ const CreateAlbumPage: React.FC = () => {
 
   if (data.users?.data) {
     return (
-      <Box py="4">
+      <>
         <Flex justify="space-between">
           <Heading mb="4">Create album</Heading>
           <BackButton />
@@ -57,13 +57,14 @@ const CreateAlbumPage: React.FC = () => {
             }}
             validationSchema={schema}
           >
-            <Input name="title" label="Title" />
+            <Input name="title" label="Title" bg="white" />
             <Select
               name="user"
               label="User"
-              data={data.users.data}
-              dataValueKey="id"
-              dataLabelKey="username"
+              options={data.users.data}
+              optionsValueKey="id"
+              optionsLabelKey="username"
+              bg="white"
             />
             <Box mt="4">
               <Button
@@ -80,7 +81,7 @@ const CreateAlbumPage: React.FC = () => {
             </Box>
           </Form>
         </Box>
-      </Box>
+      </>
     );
   }
 

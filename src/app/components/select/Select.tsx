@@ -6,19 +6,20 @@ import InputLayout from "../inputLayout";
 interface CustomSelectProps extends SelectProps {
   name: string;
   label: string;
-  data: any[];
-  dataValueKey: string;
-  dataLabelKey: string;
+  options: any[];
+  optionsValueKey: string;
+  optionsLabelKey: string;
   defaultValue?: string;
 }
 
 const Select: React.FC<CustomSelectProps> = ({
   name,
   label,
-  dataValueKey,
-  dataLabelKey,
-  data,
+  optionsValueKey,
+  optionsLabelKey,
+  options,
   defaultValue,
+  ...rest
 }) => {
   const { control } = useFormContext();
 
@@ -40,10 +41,11 @@ const Select: React.FC<CustomSelectProps> = ({
         onChange={onChange}
         onBlur={onBlur}
         placeholder="-"
+        {...rest}
       >
-        {data.map((item) => (
-          <option key={item[dataValueKey]} value={item[dataValueKey]}>
-            {item[dataLabelKey]}
+        {options.map((option) => (
+          <option key={option[optionsValueKey]} value={option[optionsValueKey]}>
+            {option[optionsLabelKey]}
           </option>
         ))}
       </ChakraSelect>

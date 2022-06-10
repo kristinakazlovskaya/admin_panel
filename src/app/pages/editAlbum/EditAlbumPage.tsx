@@ -47,7 +47,7 @@ const EditAlbumPage: React.FC = () => {
 
   if (usersData?.users?.data && albumData?.album) {
     return (
-      <Box py="4">
+      <>
         <Flex justify="space-between">
           <Heading mb="4">Edit album</Heading>
           <BackButton />
@@ -70,14 +70,16 @@ const EditAlbumPage: React.FC = () => {
               name="title"
               label="Title"
               defaultValue={albumData.album.title || ""}
+              bg="white"
             />
             <Select
               name="user"
               label="User"
-              data={usersData.users.data}
-              dataValueKey="id"
-              dataLabelKey="username"
+              options={usersData.users.data}
+              optionsValueKey="id"
+              optionsLabelKey="username"
               defaultValue={albumData.album.user?.id || ""}
+              bg="white"
             />
 
             <Box mt="4">
@@ -95,7 +97,7 @@ const EditAlbumPage: React.FC = () => {
             </Box>
           </Form>
         </Box>
-      </Box>
+      </>
     );
   }
 

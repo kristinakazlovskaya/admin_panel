@@ -1,23 +1,17 @@
 import React from "react";
 import { Input, InputProps } from "@chakra-ui/react";
-import {
-  useFormContext,
-  useController,
-  RegisterOptions,
-} from "react-hook-form";
+import { useFormContext, useController } from "react-hook-form";
 import InputLayout from "../inputLayout";
 
 interface TextInputProps extends InputProps {
   name: string;
   label: string;
-  rules?: RegisterOptions;
   defaultValue?: string;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
   name,
   label,
-  rules,
   defaultValue,
   ...rest
 }) => {
@@ -28,7 +22,6 @@ const TextInput: React.FC<TextInputProps> = ({
   } = useController({
     control,
     name,
-    rules,
     defaultValue: defaultValue || "",
   });
 

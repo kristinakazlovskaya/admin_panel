@@ -1,7 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { useMutation } from "@apollo/client";
+import React, { useRef } from "react";
 import {
-  Icon,
   useDisclosure,
   AlertDialog,
   AlertDialogOverlay,
@@ -10,35 +8,36 @@ import {
   AlertDialogHeader,
   AlertDialogFooter,
   Button,
+  IconButton,
+  Icon,
 } from "@chakra-ui/react";
 import { AiFillDelete } from "react-icons/ai";
-import { operations, Types } from "./duck";
 
-const DeleteAction: React.FC<{ record?: Record<string, unknown> }> = ({
-  record,
-}) => {
+const DeleteAction: React.FC<{
+  record?: Record<string, unknown>;
+  onDelete: (record: any) => void;
+  loading: boolean;
+  alertHeading: string;
+}> = ({ record, onDelete, loading, alertHeading }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
 
-  const [deleteAlbum, { loading, data }] = useMutation<
-    Types.DeleteAlbumMutation,
-    Types.DeleteAlbumMutationVariables
-  >(operations.deleteAlbum, {
-    variables: { id: String(record?.id) },
-  });
-
-  useEffect(() => {
-    onClose();
-  }, [data?.deleteAlbum, onClose]);
+  const handleDeleteClick = async () => {
+    try {
+      await onDelete(record);
+      onClose();
+    } catch {}
+  };
 
   return (
     <>
-      <Icon
-        mx="1"
-        as={AiFillDelete}
-        title="Delete album"
+      <IconButton
+        aria-label="Delete"
+        icon={<Icon as={AiFillDelete} />}
         onClick={onOpen}
-        _hover={{ cursor: "pointer" }}
+        bg="none"
+        size="md"
+        _hover={{ bg: "none" }}
       />
       <AlertDialog
         isOpen={isOpen}
@@ -48,7 +47,7 @@ const DeleteAction: React.FC<{ record?: Record<string, unknown> }> = ({
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete album
+              {alertHeading}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -63,7 +62,7 @@ const DeleteAction: React.FC<{ record?: Record<string, unknown> }> = ({
                 colorScheme="red"
                 ml={3}
                 isLoading={loading}
-                onClick={() => deleteAlbum()}
+                onClick={handleDeleteClick}
               >
                 Delete
               </Button>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, Link } from "@chakra-ui/react";
+import { Icon, IconButton, Link } from "@chakra-ui/react";
 import { HiPhotograph } from "react-icons/hi";
 
 const ShowPhotoAction: React.FC<{ record?: Record<string, unknown> }> = ({
@@ -7,7 +7,13 @@ const ShowPhotoAction: React.FC<{ record?: Record<string, unknown> }> = ({
 }) => {
   return (
     <Link isExternal href={String(record?.url)}>
-      <Icon as={HiPhotograph} title="Show photo" mx="1" />
+      <IconButton
+        aria-label="Show photo"
+        icon={<Icon as={HiPhotograph} />}
+        bg="none"
+        size="md"
+        _hover={{ bg: "none" }}
+      />
     </Link>
   );
 };

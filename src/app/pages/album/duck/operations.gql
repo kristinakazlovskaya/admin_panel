@@ -1,4 +1,4 @@
-query getPhotos($id: ID!, $page: Int, $limit: Int) {
+query getAlbumData($id: ID!) {
   album(id: $id) {
     user {
       id
@@ -7,16 +7,5 @@ query getPhotos($id: ID!, $page: Int, $limit: Int) {
     }
     title
     id
-    photos(options: { paginate: { page: $page, limit: $limit } }) {
-      data {
-        id
-        title
-        url
-        thumbnailUrl
-      }
-      meta {
-        totalCount
-      }
-    }
   }
 }
