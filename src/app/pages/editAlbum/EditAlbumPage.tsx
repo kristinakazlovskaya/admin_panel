@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { Flex, Box, Heading, Button } from "@chakra-ui/react";
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -33,17 +33,12 @@ const EditAlbumPage: React.FC = () => {
     variables: { id: id ?? "" },
   });
 
-  const [updateAlbum, { data: mutationData, loading: mutationLoading }] =
-    useMutation<Types.UpdateAlbumMutation, Types.UpdateAlbumMutationVariables>(
-      operations.updateAlbum
-    );
+  const [updateAlbum, { loading: mutationLoading }] = useMutation<
+    Types.UpdateAlbumMutation,
+    Types.UpdateAlbumMutationVariables
+  >(operations.updateAlbum);
 
-  useEffect(() => {
-    if (mutationData?.updateAlbum) navigate("/admin_panel/albums");
-  }, [mutationData?.updateAlbum, navigate]);
-
-  if (!usersData || usersLoading || !albumData || albumLoading)
-    return <Spinner />;
+  if (usersLoading || albumLoading) return <Spinner />;
 
   if (usersData?.users?.data && albumData?.album) {
     return (
@@ -55,14 +50,17 @@ const EditAlbumPage: React.FC = () => {
 
         <Box w="500px">
           <Form
-            onSubmit={(values) => {
-              updateAlbum({
-                variables: {
-                  title: values.title,
-                  userId: values.user,
-                  id: id ?? "",
-                },
-              });
+            onSubmit={async (values) => {
+              try {
+                await updateAlbum({
+                  variables: {
+                    title: values.title,
+                    userId: values.user,
+                    id: id ?? "",
+                  },
+                });
+                navigate("..");
+              } catch {}
             }}
             validationSchema={schema}
           >
