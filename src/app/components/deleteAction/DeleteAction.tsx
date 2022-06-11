@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   useDisclosure,
   AlertDialog,
@@ -21,13 +21,18 @@ const DeleteAction: React.FC<{
 }> = ({ record, onDelete, loading, alertHeading }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
+  const [error, setError] = useState<Error | null>(null);
 
   const handleDeleteClick = async () => {
     try {
       await onDelete(record);
       onClose();
-    } catch {}
+    } catch (err) {
+      if (err instanceof Error) setError(err);
+    }
   };
+
+  if (error) return <p>Something went wrong :(</p>;
 
   return (
     <>

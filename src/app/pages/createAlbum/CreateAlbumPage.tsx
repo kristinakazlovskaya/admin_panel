@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { Button, Heading, Box, Flex } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,6 +23,7 @@ const schema = yup
 
 const CreateAlbumPage: React.FC = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState<Error | null>(null);
 
   const { loading, data } = useQuery<
     getUsersTypes.GetUsersQuery,
@@ -33,6 +34,8 @@ const CreateAlbumPage: React.FC = () => {
     Types.CreateAlbumMutation,
     Types.CreateAlbumMutationVariables
   >(operations.createAlbum);
+
+  if (error) return <p>Something went wrong :(</p>;
 
   if (loading) return <Spinner />;
 
@@ -52,7 +55,9 @@ const CreateAlbumPage: React.FC = () => {
                   variables: { title: values.title, userId: values.user },
                 });
                 navigate("..");
-              } catch {}
+              } catch (err) {
+                if (err instanceof Error) setError(err);
+              }
             }}
             validationSchema={schema}
           >
