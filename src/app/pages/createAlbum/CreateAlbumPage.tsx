@@ -79,7 +79,7 @@ const CreateAlbumPage: React.FC = () => {
               >
                 Submit
               </Button>
-              <Link to="/admin_panel/albums">
+              <Link to="..">
                 <Button>Cancel</Button>
               </Link>
             </Box>

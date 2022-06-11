@@ -94,7 +94,7 @@ const EditAlbumPage: React.FC = () => {
               >
                 Edit
               </Button>
-              <Link to="/admin_panel/albums">
+              <Link to="..">
                 <Button>Cancel</Button>
               </Link>
             </Box>

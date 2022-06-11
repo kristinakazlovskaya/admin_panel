@@ -34,13 +34,13 @@ const Select: React.FC<CustomSelectProps> = ({
   return (
     <InputLayout name={name} label={label}>
       <ChakraSelect
+        ref={ref}
         name={name}
         id={name}
         value={value}
-        ref={ref}
+        placeholder="-"
         onChange={onChange}
         onBlur={onBlur}
-        placeholder="-"
         {...rest}
       >
         {options.map((option) => (

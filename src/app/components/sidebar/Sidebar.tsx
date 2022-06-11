@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
     >
       <Flex direction="column" justifyContent="space-between" h="100vh">
         <Box mt="4">
-          <Link to="/admin_panel/albums">
+          <Link to="albums">
             <Button
               colorScheme="teal"
               variant="ghost"

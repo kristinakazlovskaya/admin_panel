@@ -65,13 +65,13 @@ const Pagination: React.FC<{ totalCount: number }> = ({ totalCount }) => {
         <option value="50">50</option>
       </Select>
       <IconButton
+        disabled={currentPage === 1}
         bg="none"
         size="sm"
         borderRadius="50%"
         aria-label="Previous page"
         icon={<BsChevronLeft />}
         _hover={{ bg: "teal.600", color: "white" }}
-        disabled={currentPage === 1}
         onClick={() => handlePrevButtonClick()}
       />
       {pages.map((p: number) => (
@@ -88,13 +88,13 @@ const Pagination: React.FC<{ totalCount: number }> = ({ totalCount }) => {
         </Button>
       ))}
       <IconButton
+        disabled={currentPage === pages.length}
         bg="none"
         size="sm"
         borderRadius="50%"
         aria-label="Next page"
         icon={<BsChevronRight />}
         _hover={{ bg: "teal.600", color: "white" }}
-        disabled={currentPage === pages.length}
         onClick={() => handleNextButtonClick()}
       />
     </Flex>
