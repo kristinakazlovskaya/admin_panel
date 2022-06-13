@@ -12,6 +12,8 @@ const DateRangeInput: React.FC<{
   label: string;
 }> = ({ startLabel, endLabel, name, label, minDate, maxDate }) => {
   const { watch } = useFormContext();
+  const startDate = watch(`${name}-start`);
+  const endDate = watch(`${name}-end`);
 
   return (
     <FormControl as="fieldset">
@@ -20,8 +22,8 @@ const DateRangeInput: React.FC<{
         label={startLabel || "Start date"}
         name={`${name}-start`}
         selectsStart
-        startDate={watch(`${name}-start`)}
-        endDate={watch(`${name}-end`)}
+        startDate={startDate}
+        endDate={endDate}
         minDate={minDate || undefined}
         maxDate={maxDate || undefined}
       />
@@ -29,9 +31,9 @@ const DateRangeInput: React.FC<{
         label={endLabel || "End date"}
         name={`${name}-end`}
         selectsEnd
-        startDate={watch(`${name}-start`)}
-        endDate={watch(`${name}-end`)}
-        minDate={watch(`${name}-start`)}
+        startDate={startDate}
+        endDate={endDate}
+        minDate={startDate}
         maxDate={maxDate || undefined}
       />
     </FormControl>
