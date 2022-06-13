@@ -16,7 +16,7 @@ const DateInput: React.FC<
   const { control } = useFormContext();
 
   const {
-    field: { value, ref },
+    field: { value, ref, onChange },
   } = useController({
     control,
     name,
@@ -30,7 +30,10 @@ const DateInput: React.FC<
         name={name}
         id={name}
         selected={startDate}
-        onChange={(date: Date) => setStartDate(date)}
+        onChange={(date: Date) => {
+          onChange(date);
+          setStartDate(date);
+        }}
         dateFormat="MM-dd-yyyy"
         {...rest}
       />
