@@ -1,6 +1,6 @@
 import React from "react";
 import { FormControl, FormLabel } from "@chakra-ui/react";
-import { useFormContext, useController } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import DateInput from "../dateInput";
 
 const DateRangeInput: React.FC<{
@@ -11,17 +11,7 @@ const DateRangeInput: React.FC<{
   name: string;
   label: string;
 }> = ({ startLabel, endLabel, name, label, minDate, maxDate }) => {
-  const { control } = useFormContext();
-
-  const { field: startInput } = useController({
-    control,
-    name: `${name}-start`,
-  });
-
-  const { field: endInput } = useController({
-    control,
-    name: `${name}-end`,
-  });
+  const { watch } = useFormContext();
 
   return (
     <FormControl as="fieldset">
@@ -30,8 +20,8 @@ const DateRangeInput: React.FC<{
         label={startLabel || "Start date"}
         name={`${name}-start`}
         selectsStart
-        startDate={startInput.value}
-        endDate={endInput.value}
+        startDate={watch(`${name}-start`)}
+        endDate={watch(`${name}-end`)}
         minDate={minDate || undefined}
         maxDate={maxDate || undefined}
       />
@@ -39,9 +29,9 @@ const DateRangeInput: React.FC<{
         label={endLabel || "End date"}
         name={`${name}-end`}
         selectsEnd
-        startDate={startInput.value}
-        endDate={endInput.value}
-        minDate={startInput.value}
+        startDate={watch(`${name}-start`)}
+        endDate={watch(`${name}-end`)}
+        minDate={watch(`${name}-start`)}
         maxDate={maxDate || undefined}
       />
     </FormControl>

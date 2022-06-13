@@ -20,6 +20,7 @@ const DateInput: React.FC<
   } = useController({
     control,
     name,
+    defaultValue: "",
   });
 
   return (
