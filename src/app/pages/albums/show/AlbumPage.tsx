@@ -31,7 +31,7 @@ const AlbumPage: React.FC = () => {
   if (loading) return <Spinner />;
 
   if (!data?.album?.id) {
-    return <Box pt="4">Error</Box>;
+    return <Box>Error</Box>;
   }
 
   if (data.album) {

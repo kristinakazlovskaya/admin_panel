@@ -26,7 +26,6 @@ const AuthProvider: React.FC = ({ children }) => {
   const signOut = () => {
     localStorage.removeItem("fake-token");
     setIsUser(false);
-    navigate("/admin_panel/login", { replace: true });
   };
 
   const value = { isAuthorizedUser, signIn, signOut };

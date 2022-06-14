@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box } from "@chakra-ui/react";
-import { Routes, Route, Outlet } from "react-router-dom";
-import { PrivateRoute } from "app/hoc";
+import { Routes, Route, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "app/hooks";
 import { LoginPage, MainPage, NotFoundPage } from "app/pages";
 import {
@@ -12,19 +11,19 @@ import {
 } from "app/pages/albums";
 
 const Pages: React.FC = () => {
+  const navigate = useNavigate();
   const auth = useAuth();
+
+  useEffect(() => {
+    if (!auth.isAuthorizedUser) {
+      navigate("admin_panel/login");
+    }
+  }, [auth.isAuthorizedUser, navigate]);
 
   return (
     <Routes>
       {auth.isAuthorizedUser ? (
-        <Route
-          path="admin_panel"
-          element={
-            <PrivateRoute>
-              <MainPage />
-            </PrivateRoute>
-          }
-        >
+        <Route path="admin_panel" element={<MainPage />}>
           <Route
             path="albums"
             element={

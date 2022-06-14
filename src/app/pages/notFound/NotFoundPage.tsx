@@ -1,11 +1,8 @@
 import React from "react";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useAuth } from "app/hooks";
 
 const NotFoundPage: React.FC = () => {
-  const auth = useAuth();
-
   return (
     <Flex h="100vh" direction="column" justify="center" align="center">
       <Heading as="h1" size="4xl">
@@ -15,9 +12,7 @@ const NotFoundPage: React.FC = () => {
       <Text>
         Go to{" "}
         <Link
-          to={
-            auth.isAuthorizedUser ? "/admin_panel/albums" : "/admin_panel/login"
-          }
+          to="/admin_panel/albums"
           style={{ textDecoration: "underline", color: "teal" }}
         >
           home page

@@ -1,6 +1,6 @@
 import React from "react";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { AuthProvider } from "app/hoc";
+import { AuthProvider } from "app/contexts";
 import { Pages } from "./pages";
 
 const client = new ApolloClient({
