@@ -12,7 +12,7 @@ const NotFoundPage: React.FC = () => {
       <Text>
         Go to{" "}
         <Link
-          to="/admin_panel/albums"
+          to="albums"
           style={{ textDecoration: "underline", color: "teal" }}
         >
           home page

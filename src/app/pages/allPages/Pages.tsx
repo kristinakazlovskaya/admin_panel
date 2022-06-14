@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Box } from "@chakra-ui/react";
 import { Routes, Route, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "app/hooks";
-import { LoginPage, MainPage, NotFoundPage } from "app/pages";
+import { LoginPage, MainLayout, NotFoundPage } from "app/pages";
 import {
   AlbumPage,
   AlbumsListPage,
@@ -16,14 +16,14 @@ const Pages: React.FC = () => {
 
   useEffect(() => {
     if (!auth.isAuthorizedUser) {
-      navigate("admin_panel/login");
+      navigate("login");
     }
   }, [auth.isAuthorizedUser, navigate]);
 
   return (
     <Routes>
       {auth.isAuthorizedUser ? (
-        <Route path="admin_panel" element={<MainPage />}>
+        <Route path="/" element={<MainLayout />}>
           <Route
             path="albums"
             element={
@@ -39,7 +39,7 @@ const Pages: React.FC = () => {
           </Route>
         </Route>
       ) : (
-        <Route path="admin_panel/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
       )}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

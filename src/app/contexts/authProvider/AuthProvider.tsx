@@ -20,7 +20,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const signIn = () => {
     localStorage.setItem("fake-token", new Date().toString());
     setIsUser(true);
-    navigate("/admin_panel/albums", { replace: true });
+    navigate("albums", { replace: true });
   };
 
   const signOut = () => {
