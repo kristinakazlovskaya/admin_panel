@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Box } from "@chakra-ui/react";
-import { Routes, Route, Outlet, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useAuth } from "app/hooks";
 import { LoginPage, MainLayout, NotFoundPage } from "app/pages";
 import {
@@ -9,6 +8,7 @@ import {
   CreateAlbumPage,
   EditAlbumPage,
 } from "app/pages/albums";
+import { Crud } from "./components";
 
 const Pages: React.FC = () => {
   const navigate = useNavigate();
@@ -25,18 +25,16 @@ const Pages: React.FC = () => {
       {auth.isAuthorizedUser ? (
         <Route path="/" element={<MainLayout />}>
           <Route
-            path="albums"
+            path="albums/*"
             element={
-              <Box py="4">
-                <Outlet />
-              </Box>
+              <Crud
+                create={CreateAlbumPage}
+                list={AlbumsListPage}
+                edit={EditAlbumPage}
+                show={AlbumPage}
+              />
             }
-          >
-            <Route index element={<AlbumsListPage />} />
-            <Route path=":id" element={<AlbumPage />} />
-            <Route path=":id/edit" element={<EditAlbumPage />} />
-            <Route path="create" element={<CreateAlbumPage />} />
-          </Route>
+          />
         </Route>
       ) : (
         <Route path="/login" element={<LoginPage />} />

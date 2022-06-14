@@ -7,7 +7,7 @@ const MainLayout: React.FC = () => {
   return (
     <Box minH="100vh" bgGradient="linear(to-r, green.100, pink.300)">
       <Sidebar />
-      <Box ml={{ base: 40, md: 60 }} px="4">
+      <Box ml={{ base: 40, md: 60 }} p="4">
         <Outlet />
       </Box>
     </Box>
