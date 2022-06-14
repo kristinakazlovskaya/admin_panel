@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import {
   useDisclosure,
   AlertDialog,
@@ -10,6 +10,7 @@ import {
   Button,
   IconButton,
   Icon,
+  useToast,
 } from "@chakra-ui/react";
 import { AiFillDelete } from "react-icons/ai";
 
@@ -21,18 +22,20 @@ const DeleteAction: React.FC<{
 }> = ({ record, onDelete, loading, alertHeading }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
-  const [error, setError] = useState<Error | null>(null);
+  const toast = useToast();
 
   const handleDeleteClick = async () => {
     try {
       await onDelete(record);
       onClose();
-    } catch (err) {
-      if (err instanceof Error) setError(err);
+    } catch {
+      toast({
+        title: "Network Error",
+        status: "error",
+        isClosable: true,
+      });
     }
   };
-
-  if (error) return <p>Something went wrong :(</p>;
 
   return (
     <>

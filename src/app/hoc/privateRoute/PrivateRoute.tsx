@@ -7,7 +7,7 @@ const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({
 }) => {
   const auth = useAuth();
 
-  if (!auth.user) {
+  if (!auth.isAuthorizedUser) {
     return <Navigate to="login" />;
   }
 

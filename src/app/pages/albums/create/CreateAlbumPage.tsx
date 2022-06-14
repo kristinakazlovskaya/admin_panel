@@ -1,29 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { Button, Heading, Box, Flex } from "@chakra-ui/react";
+import { Button, Heading, Box, Flex, useToast } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import * as yup from "yup";
 import { Select, Input, Form, Spinner, BackButton } from "app/components";
 import {
   operations as getUsersOperation,
   Types as getUsersTypes,
-} from "../duck";
-import { operations, Types } from "./duck";
-
-const schema = yup
-  .object({
-    title: yup
-      .string()
-      .required("This is required")
-      .min(3, "Must be at least 3 characters")
-      .max(64, "Must be less than 64 characters"),
-    user: yup.string().required("This is required"),
-  })
-  .required();
+} from "../../duck";
+import { operations, Types, schema } from "./duck";
 
 const CreateAlbumPage: React.FC = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState<Error | null>(null);
+  const toast = useToast();
 
   const { loading, data } = useQuery<
     getUsersTypes.GetUsersQuery,
@@ -34,8 +22,6 @@ const CreateAlbumPage: React.FC = () => {
     Types.CreateAlbumMutation,
     Types.CreateAlbumMutationVariables
   >(operations.createAlbum);
-
-  if (error) return <p>Something went wrong :(</p>;
 
   if (loading) return <Spinner />;
 
@@ -55,8 +41,12 @@ const CreateAlbumPage: React.FC = () => {
                   variables: { title: values.title, userId: values.user },
                 });
                 navigate("..");
-              } catch (err) {
-                if (err instanceof Error) setError(err);
+              } catch {
+                toast({
+                  title: "Network Error",
+                  status: "error",
+                  isClosable: true,
+                });
               }
             }}
             validationSchema={schema}

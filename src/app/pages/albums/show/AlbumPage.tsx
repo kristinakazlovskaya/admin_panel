@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { Spinner, BackButton } from "app/components";
-import PhotosListPage from "../photosList";
+import { PhotosList } from "./components";
 import { operations, Types } from "./duck";
 
 const AlbumPage: React.FC = () => {
@@ -56,7 +56,7 @@ const AlbumPage: React.FC = () => {
               </Text>
             </TabPanel>
             <TabPanel>
-              <PhotosListPage />
+              <PhotosList />
             </TabPanel>
           </TabPanels>
         </Tabs>

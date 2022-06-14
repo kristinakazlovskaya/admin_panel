@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as Types from "../../../../schema.generated";
+import * as Types from "../../../../../schema.generated";
 
 export type GetAlbumDataQueryVariables = Types.Exact<{
   id: Types.Scalars["ID"];

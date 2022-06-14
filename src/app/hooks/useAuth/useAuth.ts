@@ -1,4 +1,4 @@
 import { useContext } from "react";
-import { AuthContext } from "../../hoc/authProvider/AuthProvider";
+import { AuthContext } from "app/hoc";
 
 export default () => useContext(AuthContext);

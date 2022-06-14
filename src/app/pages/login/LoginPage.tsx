@@ -1,18 +1,8 @@
 import React from "react";
 import { Container, Flex, Box, Heading, Button } from "@chakra-ui/react";
-import * as yup from "yup";
 import { Form, Input } from "app/components/";
 import { useAuth } from "app/hooks";
-
-const schema = yup
-  .object({
-    email: yup
-      .string()
-      .required("This is required")
-      .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g, "Must be a valid email"),
-    password: yup.string().required("This is required"),
-  })
-  .required();
+import schema from "./duck";
 
 const LoginPage: React.FC = () => {
   const { signIn } = useAuth();

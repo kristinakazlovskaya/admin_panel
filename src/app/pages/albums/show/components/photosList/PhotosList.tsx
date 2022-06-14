@@ -2,18 +2,12 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { Image, Box } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import {
-  Spinner,
-  Table,
-  Column,
-  Actions,
-  Pagination,
-  ShowPhotoAction,
-} from "app/components";
+import { Spinner, Table, Column, Actions, Pagination } from "app/components";
 import { useQueryParams } from "app/hooks";
+import ShowPhotoAction from "../showPhotoAction";
 import { Types, operations } from "./duck";
 
-const PhotosListPage: React.FC = () => {
+const PhotosList: React.FC = () => {
   const { id } = useParams();
   const [currentPage, limit] = useQueryParams("page", "limit");
 
@@ -57,4 +51,4 @@ const PhotosListPage: React.FC = () => {
   return <p>Error</p>;
 };
 
-export default PhotosListPage;
+export default PhotosList;

@@ -1,8 +1,9 @@
 import React, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { isAuthorized } from "./duck";
 
 interface AuthContextInterface {
-  user: boolean;
+  isAuthorizedUser: boolean;
   signIn: () => void;
   signOut: () => void;
 }
@@ -11,31 +12,24 @@ export const AuthContext = createContext(
   null as unknown as AuthContextInterface
 );
 
-const isAuthorized = () => {
-  if (localStorage.getItem("fake-token")) {
-    return true;
-  }
-
-  return false;
-};
-
 const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<boolean>(isAuthorized);
+  const [isAuthorizedUser, setIsUser] = useState<boolean>(isAuthorized);
 
   const navigate = useNavigate();
 
   const signIn = () => {
     localStorage.setItem("fake-token", new Date().toString());
-    setUser(true);
+    setIsUser(true);
     navigate("/admin_panel/albums", { replace: true });
   };
 
   const signOut = () => {
     localStorage.removeItem("fake-token");
-    setUser(false);
+    setIsUser(false);
+    navigate("/admin_panel/login", { replace: true });
   };
 
-  const value = { user, signIn, signOut };
+  const value = { isAuthorizedUser, signIn, signOut };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
